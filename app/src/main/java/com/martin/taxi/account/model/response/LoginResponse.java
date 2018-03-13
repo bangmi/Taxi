@@ -1,4 +1,4 @@
-package com.martin.taxi.account.response;
+package com.martin.taxi.account.model.response;
 
 
 import com.martin.taxi.common.http.biz.BaseBizResponse;

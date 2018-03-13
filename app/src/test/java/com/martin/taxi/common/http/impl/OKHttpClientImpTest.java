@@ -15,7 +15,7 @@ public class OKHttpClientImpTest {
     IHttpClient httpClient;
     @Before
     public void setUp() throws Exception {
-        httpClient = new OKHttpClientImp();
+        httpClient = new OKHttpClientImpl();
         API.Config.setDebug(false);
     }
 

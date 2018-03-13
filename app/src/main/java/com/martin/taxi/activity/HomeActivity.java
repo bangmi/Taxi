@@ -6,9 +6,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.martin.taxi.MyTaxiApplication;
 import com.martin.taxi.R;
-import com.martin.taxi.account.PhoneInputDialog;
-import com.martin.taxi.account.response.Account;
-import com.martin.taxi.account.response.LoginResponse;
+import com.martin.taxi.account.model.response.Account;
+import com.martin.taxi.account.model.response.LoginResponse;
+import com.martin.taxi.account.view.PhoneInputDialog;
 import com.martin.taxi.common.http.IHttpClient;
 import com.martin.taxi.common.http.IRequest;
 import com.martin.taxi.common.http.IResponse;
@@ -16,7 +16,7 @@ import com.martin.taxi.common.http.api.API;
 import com.martin.taxi.common.http.biz.BaseBizResponse;
 import com.martin.taxi.common.http.impl.BaseRequest;
 import com.martin.taxi.common.http.impl.BaseResponse;
-import com.martin.taxi.common.http.impl.OKHttpClientImp;
+import com.martin.taxi.common.http.impl.OKHttpClientImpl;
 import com.martin.taxi.common.storage.SharedPreferencesDao;
 import com.martin.taxi.common.util.ToastUtil;
 
@@ -29,7 +29,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mHttpClient = new OKHttpClientImp();
+        mHttpClient = new OKHttpClientImpl();
         checkLoginState();
     }
 
