@@ -1,6 +1,6 @@
-package com.martin.taxi.account.model.response;
+package com.martin.taxi.account.response;
 
-public class Account {
+public class UserAccount {
     private String token;
     private String uid;
     private String account;

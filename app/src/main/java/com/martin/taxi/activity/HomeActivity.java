@@ -6,9 +6,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.martin.taxi.MyTaxiApplication;
 import com.martin.taxi.R;
-import com.martin.taxi.account.model.response.Account;
-import com.martin.taxi.account.model.response.LoginResponse;
-import com.martin.taxi.account.view.PhoneInputDialog;
+import com.martin.taxi.account.PhoneInputDialog;
+import com.martin.taxi.account.response.UserAccount;
+import com.martin.taxi.account.response.LoginResponse;
 import com.martin.taxi.common.http.IHttpClient;
 import com.martin.taxi.common.http.IRequest;
 import com.martin.taxi.common.http.IResponse;
@@ -16,21 +16,21 @@ import com.martin.taxi.common.http.api.API;
 import com.martin.taxi.common.http.biz.BaseBizResponse;
 import com.martin.taxi.common.http.impl.BaseRequest;
 import com.martin.taxi.common.http.impl.BaseResponse;
-import com.martin.taxi.common.http.impl.OKHttpClientImpl;
+import com.martin.taxi.common.http.impl.OKHttpClientImp;
 import com.martin.taxi.common.storage.SharedPreferencesDao;
 import com.martin.taxi.common.util.ToastUtil;
 
 public class HomeActivity extends BaseActivity {
 
-    private final static String TAG = "MainActivity";
     private IHttpClient mHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mHttpClient = new OKHttpClientImpl();
+        mHttpClient = new OKHttpClientImp();
         checkLoginState();
+
     }
 
     /**
@@ -40,11 +40,8 @@ public class HomeActivity extends BaseActivity {
 
         // 获取本地登录信息
 
-        SharedPreferencesDao dao =
-                new SharedPreferencesDao(MyTaxiApplication.getInstance(),
-                        SharedPreferencesDao.FILE_ACCOUNT);
-        final Account account =
-                (Account) dao.get(SharedPreferencesDao.KEY_ACCOUNT, Account.class);
+        SharedPreferencesDao dao = new SharedPreferencesDao(MyTaxiApplication.getInstance(), SharedPreferencesDao.FILE_ACCOUNT);
+        final UserAccount account = (UserAccount) dao.get(SharedPreferencesDao.KEY_ACCOUNT, UserAccount.class);
 
         // 登录是否过期
         boolean tokenValid = false;
@@ -69,15 +66,12 @@ public class HomeActivity extends BaseActivity {
                     IResponse response = mHttpClient.post(request, false);
                     Log.d(TAG, response.getData());
                     if (response.getCode() == BaseResponse.STATE_OK) {
-                        LoginResponse bizRes =
-                                new Gson().fromJson(response.getData(), LoginResponse.class);
+                        LoginResponse bizRes = new Gson().fromJson(response.getData(), LoginResponse.class);
                         if (bizRes.getCode() == BaseBizResponse.STATE_OK) {
                             // Token 登录成功 保存登录信息
-                            Account account = bizRes.getData();
+                            UserAccount account = bizRes.getData();
                             // todo: 加密存储
-                            SharedPreferencesDao dao =
-                                    new SharedPreferencesDao(MyTaxiApplication.getInstance(),
-                                            SharedPreferencesDao.FILE_ACCOUNT);
+                            SharedPreferencesDao dao = new SharedPreferencesDao(MyTaxiApplication.getInstance(), SharedPreferencesDao.FILE_ACCOUNT);
                             dao.save(SharedPreferencesDao.KEY_ACCOUNT, account);
 
                             // 通知 UI
@@ -101,8 +95,7 @@ public class HomeActivity extends BaseActivity {
                         HomeActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ToastUtil.show(HomeActivity.this,
-                                        getString(R.string.error_server));
+                                ToastUtil.show(HomeActivity.this, getString(R.string.error_server));
                             }
                         });
                     }

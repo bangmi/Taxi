@@ -1,16 +1,16 @@
-package com.martin.taxi.account.model.response;
+package com.martin.taxi.account.response;
 
 
 import com.martin.taxi.common.http.biz.BaseBizResponse;
 
 public class LoginResponse extends BaseBizResponse {
-    Account data;
+    UserAccount data;
 
-    public Account getData() {
+    public UserAccount getData() {
         return data;
     }
 
-    public void setData(Account data) {
+    public void setData(UserAccount data) {
         this.data = data;
     }
 }

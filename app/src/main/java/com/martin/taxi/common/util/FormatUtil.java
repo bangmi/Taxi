@@ -2,9 +2,6 @@ package com.martin.taxi.common.util;
 
 import java.util.regex.Pattern;
 
-/**
- * Created by liuguangli on 17/2/27.
- */
 public class FormatUtil {
 
     /**

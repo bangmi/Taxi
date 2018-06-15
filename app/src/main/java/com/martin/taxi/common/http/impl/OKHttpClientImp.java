@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 
-public class OKHttpClientImpl implements IHttpClient {
+public class OKHttpClientImp implements IHttpClient {
 
     OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
             .build();
